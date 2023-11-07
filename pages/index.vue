@@ -1,7 +1,6 @@
 <template>
   <div>
-      <LayoutHeader />
-      <NuxtPage />
+      index page
   </div>
 </template>
 <script>
