@@ -1,10 +1,9 @@
 <template>
   <div>
-      <LayoutHeader />
-      <NuxtPage class="container" />
+      login page
   </div>
 </template>
-<script>
+<script setup>
 
 </script>
 <style scoped>

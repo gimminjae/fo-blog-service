@@ -1,24 +1,72 @@
 <template>
     <div>
-        <input type="text" @v-model="signUpDto.username">
-        <input type="text" @v-model="signUpDto.nickname">
-        <input type="text" @v-model="signUpDto.password1">
-        <input type="text" @v-model="signUpDto.password2">
-        <button @click="signUp(signUpDto)">회원가입</button>
+        <div class="mx-auto my-auto" style="width: 40%; height: 40%;">
+            <div class="mb-3">
+                <label for="exampleInputUsername" class="form-label">아이디</label>
+                <div class="row g-3 align-items-center">
+                    <div class="col-auto">
+                        <input v-model="signUpDto.username" type="text" id="inputPassword6" class="form-control"
+                               aria-describedby="passwordHelpInline">
+                    </div>
+                    <div class="col-auto">
+                        <button class="btn btn-secondary">중복확인</button>
+                    </div>
+                    <div class="col-auto">
+                        <span id="passwordHelpInline" class="form-text">
+                            Must be 8-20 characters long.
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputNickname" class="form-label">닉네임</label>
+                <div class="row g-3 align-items-center">
+                    <div class="col-auto">
+                        <input v-model="signUpDto.nickname" type="text" id="inputPassword6" class="form-control"
+                               aria-describedby="passwordHelpInline">
+                    </div>
+                    <div class="col-auto">
+                        <button class="btn btn-secondary">중복확인</button>
+                    </div>
+                    <div class="col-auto">
+                        <span id="passwordHelpInline" class="form-text">
+                            Must be 8-20 characters long.
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">비밀번호</label>
+                <input v-model="signUpDto.password1" type="password" class="form-control" id="exampleInputPassword1">
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputPassword2" class="form-label">비밀번호 확인</label>
+                <input v-model="signUpDto.password2" type="password" class="form-control" id="exampleInputPassword1">
+            </div>
+            <div class="d-grid">
+                <button class="btn btn-primary" type="button" @click="signUp(signUpDto)">회원가입</button>
+            </div>
+        </div>
+        {{ signUpDto }}
     </div>
 </template>
 <script setup>
-import { api } from '~/core/api/api'
+import {api} from '~/core/api/api'
+import {ref} from 'vue'
 
 const signUpDto = ref({
-    username: "",
-    nickname: "",
-    password1: "",
-    password2: ""
+    username: '',
+    nickname: '',
+    password1: '',
+    password2: ''
 })
-function signUp(signUpDto) {
-    const result = api.post("/api/member", signUpDto)
-    console.log(result)
+
+async function signUp(signUpDto) {
+    try {
+        await api.post("/api/member", signUpDto)
+    } catch(error) {
+        console.log('error: ', error.response.data.errors)
+    }
 }
 </script>
 <style scoped>
