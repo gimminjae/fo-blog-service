@@ -47,25 +47,35 @@
                 <button class="btn btn-primary" type="button" @click="signUp(signUpDto)">회원가입</button>
             </div>
         </div>
-        {{ signUpDto }}
     </div>
 </template>
 <script setup>
-import {api} from '~/core/api/api'
 import {ref} from 'vue'
+import member from '~/composables/member'
+import handleError from '~/composables/error'
+import toastAlert from '~/composables/toast'
 
 const signUpDto = ref({
     username: '',
     nickname: '',
     password1: '',
-    password2: ''
+    password2: '',
+    memType: 'COMMON'
 })
 
 async function signUp(signUpDto) {
     try {
-        await api.post("/api/member", signUpDto)
+        await member.signUp(signUpDto)
+        const query = {
+            message: '회원가입이 완료되었습니다.',
+            type: 'success',
+        }
+        router.replace({
+            path: '/',
+            query: query
+        })
     } catch(error) {
-        console.log('error: ', error.response.data.errors)
+        handleError.apiError(error)
     }
 }
 </script>

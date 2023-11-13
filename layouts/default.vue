@@ -4,8 +4,7 @@
       <NuxtPage class="container" />
   </div>
 </template>
-<script>
-
+<script setup>
 </script>
 <style scoped>
 

@@ -6,7 +6,13 @@
         </NuxtLayout>
     </div>
 </template>
-<script setup lang="ts">
+<script setup>
+import 'vue3-toastify/dist/index.css'
+import routes from '~/composables/route'
+
+onMounted(() => {
+    routes.alertRouteQuery()
+})
 </script>
 <style scoped>
 
