@@ -15,6 +15,12 @@ const cookieUtil = {
     setRefreshToken(value) {
         this.setWithMaxAge('refreshToken', value, 14*24*60*60) // 2 weeks
     },
+    getAccessToken() {
+        return this.get('accessToken')
+    },
+    getRefreshToken() {
+        return this.get('refreshToken')
+    },
     get(key) {
         const cookie = useCookie(key).value
 

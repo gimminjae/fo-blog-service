@@ -3,7 +3,7 @@
         <div class="mx-auto my-auto" style="width: 40%; height: 40%;">
             <div class="mb-3">
                 <label class="form-label">아이디</label>
-                <input v-model="loginDto.username" type="password" class="form-control" id="username">
+                <input v-model="loginDto.username" type="text" class="form-control" id="username">
             </div>
             <div class="mb-3">
                 <label class="form-label">비밀번호</label>
@@ -17,17 +17,27 @@
                     회원가입
                 </NuxtLink>
             </div>
-            {{ loginDto }}
         </div>
     </div>
 </template>
 <script setup>
+import member from "~/composables/member";
+import handleError from "~/composables/error";
+import cookieUtil from "~/composables/cookie";
+
 const loginDto = ref({
     username: '',
     password: ''
 })
-function signIn(loginDto) {
-    console.log(loginDto)
+async function signIn(loginDto) {
+    try {
+        const result = await member.signIn(loginDto)
+        cookieUtil.setAccessToken(result.accessToken)
+        cookieUtil.setRefreshToken(result.refreshToken)
+        router.replace({ path: '/' })
+    } catch(error) {
+        handleError.apiError(error)
+    }
 }
 </script>
 <style scoped>

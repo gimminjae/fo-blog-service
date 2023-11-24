@@ -1,5 +1,6 @@
 import axios from "axios";
 import commonUtil from "~/composables/common";
+import cookieUtil from "~/composables/cookie";
 
 export const api = {
   post,
@@ -8,23 +9,29 @@ export const api = {
   remove,
   head,
 };
-
-const initParam = process.client ? {} : { baseURL: "http://localhost:8080" };
-const instance = axios.create(initParam);
-// const instance = axios.create()
-console.log(
-  "create axios instance!!! - cookie",
-  instance.defaults.headers.Cookie
+const instance = axios.create(process.client ? {} : { baseURL: 'http://localhost:8080' });
+instance.interceptors.request.use(
+    async (config) => {
+        let accessToken = cookieUtil.getAccessToken()
+        if (!accessToken) {
+            const { data } = await axios.get(`/api/member/access-token?refreshToken=${cookieUtil.getRefreshToken()}`)
+            cookieUtil.setAccessToken(data)
+            accessToken = data
+        }
+        config.headers.Authorization = accessToken
+        return config
+    },
+    (error) => {
+        alert('error 발생')
+    }
 );
-
-instance.interceptors.request.use();
 
 function post(url, data = {}) {
   return instance.post(url, data).then((response) => response.data);
 }
 
 function get(url, data = {}) {
-  return instance.get(`${url}?${commonUtil.makeSearchParam(data)}`).then((response) => response.data);
+  return instance.get(`${url}${commonUtil.makeSearchParam(data)}`).then((response) => response.data);
 }
 
 function put(url, data = {}) {
