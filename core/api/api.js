@@ -1,4 +1,5 @@
 import axios from "axios";
+import commonUtil from "~/composables/common";
 
 export const api = {
   post,
@@ -23,7 +24,7 @@ function post(url, data = {}) {
 }
 
 function get(url, data = {}) {
-  return instance.get(url, data).then((response) => response.data);
+  return instance.get(`${url}?${commonUtil.makeSearchParam(data)}`).then((response) => response.data);
 }
 
 function put(url, data = {}) {
