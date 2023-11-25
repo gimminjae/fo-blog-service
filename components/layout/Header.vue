@@ -16,9 +16,9 @@
           </ul>
 
           <div class="col-md-3 text-end d-flex gap-2">
-              <NuxtLink to="/member/sign-in" type="button" class="btn btn-outline-primary">Sign-in</NuxtLink>
-              <NuxtLink to="/member/sign-up" type="button" class="btn btn-primary">Sign-up</NuxtLink>
-              <button @click="signOut" class="btn btn-secondary" type="button">sign-out</button>
+              <NuxtLink v-if="!store.member.memId" to="/member/sign-in" type="button" class="btn btn-outline-primary">Sign-in</NuxtLink>
+              <NuxtLink v-if="!store.member.memId" to="/member/sign-up" type="button" class="btn btn-primary">Sign-up</NuxtLink>
+              <button v-if="store.member.memId" @click="signOut" class="btn btn-secondary" type="button">sign-out</button>
           </div>
       </header>
   </div>
@@ -27,6 +27,7 @@
 import cookieUtil from "~/composables/cookie";
 import { useMainStore } from "~/store/index";
 
+const store = useMainStore()
 async function signOut() {
     cookieUtil.remove('accessToken')
     cookieUtil.remove('refreshToken')
