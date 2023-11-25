@@ -1,24 +1,30 @@
-export const state = () => ({
-    member: {
-        memId: '',
-        nickname: '',
-        createDateTime: '',
-        role: '',
-    }
-})
-export const mutations = {
-    removeMember() {
-        state.member = {
+import { defineStore } from 'pinia'
+export const useMainStore = defineStore('member', {
+    state: () => ({
+        member: {
             memId: '',
             nickname: '',
             createDateTime: '',
-            role: '',
+            role: ''
+        }
+    }),
+    actions: {
+        removeMember() {
+            this.member = {
+                memId: '',
+                nickname: '',
+                createDateTime: '',
+                role: '',
+            }
+        },
+        setMember(member) {
+            this.member.memId = member.memId
+            this.member.nickname = member.nickname
+            this.member.createDateTime = member.createDateTime
+            this.member.role = member.role
+        },
+        getMember() {
+            return this.member
         }
     },
-    setMember(member) {
-        state.member.memId = member.memId
-        state.member.nickname = member.nickname
-        state.member.createDateTime = member.createDateTime
-        state.member.role = member.role
-    }
-}
+})

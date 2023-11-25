@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="mx-auto my-auto" style="width: 40%; height: 40%;">
+        <div class="mx-auto align-middle" style="width: 40%; height: 40%;">
             <div class="mb-3">
                 <label class="form-label">아이디</label>
                 <input v-model="loginDto.username" type="text" class="form-control" id="username">
@@ -24,6 +24,7 @@
 import member from "~/composables/member";
 import handleError from "~/composables/error";
 import cookieUtil from "~/composables/cookie";
+import {useMainStore} from "~/store/index";
 
 const loginDto = ref({
     username: '',
@@ -34,6 +35,8 @@ async function signIn(loginDto) {
         const result = await member.signIn(loginDto)
         cookieUtil.setAccessToken(result.accessToken)
         cookieUtil.setRefreshToken(result.refreshToken)
+        const me = await member.getMe()
+        useMainStore().setMember(me.member)
         router.replace({ path: '/' })
     } catch(error) {
         handleError.apiError(error)

@@ -14,9 +14,13 @@ instance.interceptors.request.use(
     async (config) => {
         let accessToken = cookieUtil.getAccessToken()
         if (!accessToken) {
-            const { data } = await axios.get(`/api/member/access-token?refreshToken=${cookieUtil.getRefreshToken()}`)
-            cookieUtil.setAccessToken(data)
-            accessToken = data
+            try {
+                const { data } = await axios.get(`/api/member/access-token?refreshToken=${cookieUtil.getRefreshToken()}`)
+                cookieUtil.setAccessToken(data)
+                accessToken = data
+            } catch (error) {
+
+            }
         }
         config.headers.Authorization = accessToken
         return config

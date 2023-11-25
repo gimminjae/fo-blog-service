@@ -2,19 +2,17 @@
   <div>
       <button @click="getMe" class="btn btn-primary btn-lg">getMe</button>
       <div>
-          {{ loginedMember }}
+          {{ useMainStore().member }}
       </div>
   </div>
 </template>
 <script setup>
 import member from "~/composables/member";
-import {ref} from 'vue'
+import {useMainStore} from "~/store/index";
 
-const loginedMember = ref({})
 async function getMe() {
     const me = await member.getMe()
-    console.log(me)
-    loginedMember.value = me
+    useMainStore().setMember(me.member)
 }
 </script>
 <style scoped>

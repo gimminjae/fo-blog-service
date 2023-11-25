@@ -15,15 +15,24 @@
               <li><a href="#" class="nav-link px-2">About</a></li>
           </ul>
 
-          <div class="col-md-3 text-end">
-              <NuxtLink to="/member/sign-in" type="button" class="btn btn-outline-primary me-2">Sign-in</NuxtLink>
+          <div class="col-md-3 text-end d-flex gap-2">
+              <NuxtLink to="/member/sign-in" type="button" class="btn btn-outline-primary">Sign-in</NuxtLink>
               <NuxtLink to="/member/sign-up" type="button" class="btn btn-primary">Sign-up</NuxtLink>
+              <button @click="signOut" class="btn btn-secondary" type="button">sign-out</button>
           </div>
       </header>
   </div>
 </template>
-<script>
+<script setup>
+import cookieUtil from "~/composables/cookie";
+import { useMainStore } from "~/store/index";
 
+async function signOut() {
+    cookieUtil.remove('accessToken')
+    cookieUtil.remove('refreshToken')
+    useMainStore.removeMember()
+    router.replace({ path: '/' })
+}
 </script>
 <style scoped>
 
