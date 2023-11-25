@@ -1,4 +1,5 @@
 import { api } from '~/core/api/api'
+import cookieUtil from "~/composables/cookie";
 
 const member = {
     signUp(data) {
@@ -21,6 +22,9 @@ const member = {
     },
     getMe() {
         return api.get('/api/member')
+    },
+    regenerateAccessToken() {
+        return api.get('/api/member/access-token', cookieUtil.getRefreshToken())
     }
 }
 export default member
