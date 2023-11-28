@@ -32,7 +32,7 @@ async function signOut() {
     await member.signOut();
     cookieUtil.remove('accessToken')
     cookieUtil.remove('refreshToken')
-    useMainStore().removeMember()
+    store.removeMember()
     router.replace({ path: '/' })
 }
 </script>
