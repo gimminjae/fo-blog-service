@@ -8,6 +8,9 @@ const member = {
     signIn(data) {
         return api.get('/api/member/sign-in', data)
     },
+    signOut() {
+        return api.get('/api/member/sign-out')
+    },
     checkDuplUsername(data) {
         const paramData = {
             username: data

@@ -25,12 +25,14 @@
 <script setup>
 import cookieUtil from "~/composables/cookie";
 import { useMainStore } from "~/store/index";
+import member from "~/composables/member";
 
 const store = useMainStore()
 async function signOut() {
+    await member.signOut();
     cookieUtil.remove('accessToken')
     cookieUtil.remove('refreshToken')
-    useMainStore.removeMember()
+    useMainStore().removeMember()
     router.replace({ path: '/' })
 }
 </script>
