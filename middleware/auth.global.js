@@ -9,7 +9,8 @@ const common = [
     '/'
 ]
 const logined = [
-    '/member/my-page'
+    '/member/my-page',
+    '/post/write'
 ]
 async function regenAccessToken() {
     const { data } = await axios.get(`/api/member/access-token?refreshToken=${cookieUtil.getRefreshToken()}`)

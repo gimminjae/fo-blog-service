@@ -1,17 +1,27 @@
 <template>
   <div>
       write post page
+      <editor />
   </div>
 </template>
-<script setup>
-setPageLayout('post-layout')
-// export default {
-//     layout: 'post-layout',
-//     // 또는
-//     // layout(context) {
-//     //     layout 'newLayout'
-//     // }
-// }
+<script>
+import {Editor} from "@toast-ui/vue-editor";
+
+export default {
+    components: {
+        editor: Editor
+    }
+}
 </script>
+<!--<script setup>-->
+<!--import '@toast-ui/editor/dist/toastui-editor.css';-->
+<!--import { Editor } from '@toast-ui/vue-editor';-->
+
+<!--setPageLayout('post-layout')-->
+
+<!--const component = {-->
+<!--    editor: Editor-->
+<!--}-->
+<!--</script>-->
 <style scoped>
 </style>
