@@ -7,6 +7,13 @@
     </div>
 </template>
 <script setup>
+import member from "~/composables/member"
+import {useMainStore} from "~/store/index";
+
+onMounted(async () => {
+    const result = await member.getMe()
+    useMainStore().setMember(result.member)
+})
 </script>
 <style scoped>
 
