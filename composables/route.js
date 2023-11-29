@@ -13,6 +13,9 @@ const routes = {
         } else if (query.type === 'error') {
             toastAlert.error(query.message)
         }
+    },
+    getQuery: () => {
+        return useRoute().query
     }
 }
 

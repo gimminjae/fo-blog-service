@@ -9,8 +9,8 @@
 
           <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
               <li><NuxtLink to="/" class="nav-link px-2 link-secondary">Home</NuxtLink></li>
-              <li><NuxtLink to="/post" class="nav-link px-2">Write</NuxtLink></li>
-              <li><NuxtLink to="/member/${}" class="nav-link px-2">My Page</NuxtLink></li>
+              <li><NuxtLink v-if="store.member.memId" to="/post" class="nav-link px-2">Write</NuxtLink></li>
+              <li><NuxtLink v-if="store.member.memId" to="/member/my-page" class="nav-link px-2">My Page</NuxtLink></li>
               <li><a href="#" class="nav-link px-2">About</a></li>
           </ul>
 
