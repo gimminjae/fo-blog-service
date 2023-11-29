@@ -5,6 +5,12 @@ const unknown = [
     '/member/sign-in',
     '/member/sign-up'
 ]
+const common = [
+    '/'
+]
+const logined = [
+    '/member/my-page'
+]
 async function regenAccessToken() {
     const { data } = await axios.get(`/api/member/access-token?refreshToken=${cookieUtil.getRefreshToken()}`)
     cookieUtil.setAccessToken(data)
@@ -23,7 +29,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
             return navigateTo(nuxt.$localPath('/'))
         }
     }
-    if (!to.fullPath.startsWith('/login/adminLogin') && !to.fullPath.startsWith('/guide')) {
+    if (logined.includes(to.fullPath)) {
         // not logined => redirect login page
         if (!cookieUtil.getAccessToken()) {
             if (!cookieUtil.getRefreshToken()) {
