@@ -51,6 +51,14 @@ onMounted(() => {
         },
     });
 });
+
+function savePost() {
+
+}
+function saveTmpPost() {
+
+}
+
 setPageLayout('post-layout')
 </script>
 <style scoped>

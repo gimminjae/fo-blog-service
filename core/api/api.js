@@ -43,7 +43,7 @@ function put(url, data = {}) {
 }
 
 function remove(url, data = {}) {
-  return instance.delete(url, data).then((response) => response.data);
+    return instance.delete(`${url}${commonUtil.makeSearchParam(data)}`).then((response) => response.data);
 }
 
 function head(url, data = {}) {
