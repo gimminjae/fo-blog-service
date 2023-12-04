@@ -22,8 +22,8 @@
       <div ref="editor" class="mb-2" />
       <div class="">
           <div class="btn-group" role="group" aria-label="Basic example">
-              <button type="button" class="btn btn-primary">저장</button>
-              <button type="button" class="btn btn-secondary">임시저장</button>
+              <button @click="savePost" type="button" class="btn btn-primary">저장</button>
+              <button @click="saveTmpPost" type="button" class="btn btn-secondary">임시저장</button>
           </div>
       </div>
   </div>
@@ -31,14 +31,7 @@
 <script setup>
 import Editor from '@toast-ui/editor';
 
-const props = defineProps({
-    modelValue: {
-        type: String,
-        required: false,
-        default: '',
-    },
-});
-const emit = defineEmits(['update:modelValue']);
+const content = ref('')
 const editor = ref();
 onMounted(() => {
     const e = new Editor({
@@ -47,13 +40,14 @@ onMounted(() => {
         initialEditType: 'markdown',
         previewStyle: 'vertical',
         events: {
-            change: () => emit('update:modelValue', e.getMarkdown()),
+            change: () => content.value = e.getMarkdown()
         },
+        initialValue: ''
     });
 });
 
 function savePost() {
-
+    console.log(content.value)
 }
 function saveTmpPost() {
 
