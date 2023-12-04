@@ -5,7 +5,7 @@
               <div class="input-group-prepend">
                   <span class="input-group-text" id="inputGroup-sizing-default">제목</span>
               </div>
-              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+              <input v-model="postObject.title" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
           </div>
           <div class="input-group">
               <div class="input-group-prepend">
@@ -30,8 +30,14 @@
 </template>
 <script setup>
 import Editor from '@toast-ui/editor';
+import toastAlert from "~/composables/toast";
+import post from "~/composables/post"
+import handleError from "~/composables/error";
 
-const content = ref('')
+const postObject = ref({
+    title: '',
+    content: ''
+})
 const editor = ref();
 onMounted(() => {
     const e = new Editor({
@@ -40,17 +46,39 @@ onMounted(() => {
         initialEditType: 'markdown',
         previewStyle: 'vertical',
         events: {
-            change: () => content.value = e.getMarkdown()
+            change: () => postObject.value.content = e.getMarkdown()
         },
         initialValue: ''
     });
 });
 
-function savePost() {
-    console.log(content.value)
+async function savePost() {
+    isValid()
+    try {
+        await post.save(postObject.value)
+        router.replace({ path: '/' }) // post detail 페이지로 이동
+    } catch(error) {
+        handleError.apiError(error)
+    }
 }
-function saveTmpPost() {
-
+async function saveTmpPost() {
+    isValid()
+    try {
+        await post.saveTmp(postObject.value)
+        router.replace({ path: '/' }) // post detail 페이지로 이동
+    } catch(error) {
+        handleError.apiError(error)
+    }
+}
+function isValid() {
+    if (postObject.value.title.trim() === '') {
+        toastAlert.warn('글 제목은 필수입니다.')
+        return
+    }
+    if (postObject.value.content.trim() === '') {
+        toastAlert.warn('글 내용을 입력하세요.')
+        return
+    }
 }
 
 setPageLayout('post-layout')
