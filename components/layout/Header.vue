@@ -8,22 +8,33 @@
           </div>
 
           <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-              <li><a href="#" class="nav-link px-2 link-secondary">Home</a></li>
-              <li><a href="#" class="nav-link px-2">Features</a></li>
-              <li><a href="#" class="nav-link px-2">Pricing</a></li>
-              <li><a href="#" class="nav-link px-2">FAQs</a></li>
+              <li><NuxtLink to="/" class="nav-link px-2 link-secondary">Home</NuxtLink></li>
+              <li><NuxtLink v-if="store.member.memId" to="/post/write" class="nav-link px-2">Write</NuxtLink></li>
+              <li><NuxtLink v-if="store.member.memId" to="/member/my-page" class="nav-link px-2">My Page</NuxtLink></li>
               <li><a href="#" class="nav-link px-2">About</a></li>
           </ul>
 
-          <div class="col-md-3 text-end">
-              <button type="button" class="btn btn-outline-primary me-2">Login</button>
-              <button type="button" class="btn btn-primary">Sign-up</button>
+          <div class="col-md-3 text-end d-flex gap-2">
+              <NuxtLink v-if="!store.member.memId" to="/member/sign-in" type="button" class="btn btn-outline-primary">Sign-in</NuxtLink>
+              <NuxtLink v-if="!store.member.memId" to="/member/sign-up" type="button" class="btn btn-primary">Sign-up</NuxtLink>
+              <button v-if="store.member.memId" @click="signOut" class="btn btn-secondary" type="button">sign-out</button>
           </div>
       </header>
   </div>
 </template>
-<script>
+<script setup>
+import cookieUtil from "~/composables/cookie";
+import { useMainStore } from "~/store/index";
+import member from "~/composables/member";
 
+const store = useMainStore()
+async function signOut() {
+    await member.signOut();
+    cookieUtil.remove('accessToken')
+    cookieUtil.remove('refreshToken')
+    store.removeMember()
+    router.replace({ path: '/' })
+}
 </script>
 <style scoped>
 

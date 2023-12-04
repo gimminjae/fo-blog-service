@@ -1,7 +1,10 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 // @ts-ignore
+import { defineNuxtConfig } from 'nuxt/config';
+
 export default defineNuxtConfig({
     modules: [
+        '@pinia/nuxt'
         // '@nuxtjs/axios',
         // '@nuxtjs/proxy'
     ],
