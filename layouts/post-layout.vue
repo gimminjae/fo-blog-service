@@ -1,7 +1,7 @@
 <template>
   <div>
       <LayoutHeader />
-      <NuxtPage class="" />
+      <NuxtPage class="mx-3" />
   </div>
 </template>
 <script setup>
