@@ -21,9 +21,9 @@
           <div v-if="postsViewMode === 'notTmp'" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
               <div class="col" v-for="post in notTmpPosts">
                   <div class="card shadow-sm">
-                      <svg @click="router.push({ path: `/post/detail/${post.postId}` })" class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: صورة مصغرة" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">صورة مصغرة</text></svg>
+                      <svg @click="router.push({ path: `/post/detail`, query: { postId: post.postId } })" class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: صورة مصغرة" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">صورة مصغرة</text></svg>
                       <div class="card-body">
-                          <NuxtLink :to="`/post/detail/${post.postId}`"><p class="card-text">{{ post.title }}</p></NuxtLink>
+                          <NuxtLink :to="{ path: `/post/detail`, query: { postId: post.postId } }"><p class="card-text">{{ post.title }}</p></NuxtLink>
                           <div class="d-flex justify-content-between align-items-center">
                               <div class="btn-group">
                                   <button type="button" class="btn btn-sm btn-outline-secondary">수정</button>
@@ -41,9 +41,9 @@
           <div v-if="postsViewMode === 'tmp'" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
               <div class="col" v-for="post in tmpPosts">
                   <div class="card shadow-sm">
-                      <svg @click="router.push({ path: `/post/detail/${post.postId}` })" class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: صورة مصغرة" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">صورة مصغرة</text></svg>
+                      <svg @click="router.push({ path: `/post/detail?postId=${post.postId}` })" class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: صورة مصغرة" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">صورة مصغرة</text></svg>
                       <div class="card-body">
-                          <NuxtLink :to="`/post/detail/${post.postId}`"><p class="card-text">{{ post.title }}</p></NuxtLink>
+                          <NuxtLink :to="`/post/detail?postId=${post.postId}`"><p class="card-text">{{ post.title }}</p></NuxtLink>
                           <div class="d-flex justify-content-between align-items-center">
                               <div class="btn-group">
                                   <button type="button" class="btn btn-sm btn-outline-secondary">수정</button>
@@ -63,7 +63,6 @@
 </template>
 <script setup>
 import { ref } from "vue";
-import {useMainStore} from "~/store/index";
 import post from "~/composables/post"
 
 const postsViewMode = ref("notTmp")

@@ -26,19 +26,22 @@
 <script setup>
 import {useMainStore} from "~/store/index";
 import Viewer from '@toast-ui/editor/dist/toastui-editor-viewer';
+import post from "~/composables/post";
+import router from "~/composables/router";
+import routes from "~/composables/route";
 
 const postObject = ref({})
 let viewer = null
 // postObject.value = await post.getById(route.getParam().id)
 onMounted(async () => {
-    postObject.value = await post.getById(route.getParam().id)
+    postObject.value = await post.getById(routes.getQuery().postId)
     const content = postObject.value.content
     viewer = new Viewer({
         el: document.querySelector('#viewer'),
         viewer: true,
         initialValue: content
     });
-    viewer.setMarkdown(content)
+    // viewer.setMarkdown(content)
 })
 async function removePost(postId) {
     if (!confirm('정말로 삭제하시겠습니까?')) {
