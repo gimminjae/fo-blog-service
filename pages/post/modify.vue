@@ -54,6 +54,7 @@ onMounted(async () => {
 async function modifyPost() {
     isValid()
     try {
+        postObject.value.tmpYn = false
         await post.modify(postObject.value)
         router.replace({ path: '/' }) // post detail 페이지로 이동
     } catch(error) {
@@ -63,6 +64,7 @@ async function modifyPost() {
 async function modifyTmpPost() {
     isValid()
     try {
+        postObject.value.tmpYn = true
         await post.modify(postObject.value)
         router.replace({ path: '/' }) // post detail 페이지로 이동
     } catch(error) {
