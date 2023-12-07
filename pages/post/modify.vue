@@ -23,7 +23,7 @@
       <div class="">
           <div class="btn-group" role="group" aria-label="Basic example">
               <button @click="modifyPost" type="button" class="btn btn-primary">저장</button>
-              <button v-if="postObject.tmpYn" @click="modifyTmpPost" type="button" class="btn btn-secondary">임시저장</button>
+              <button @click="modifyTmpPost" type="button" class="btn btn-secondary">임시저장</button>
           </div>
       </div>
   </div>
