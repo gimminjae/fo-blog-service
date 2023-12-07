@@ -28,5 +28,11 @@ export default defineNuxtConfig({
             }
         }
     },
-    ssr: true
+    routeRules: {
+        // prerender : 빌드 시 해당 경로를 사전 렌더링하고 정적 자산으로 빌드에 포함합니다.
+        // '/': { prerender: true },
+        // SSR을 비활성화하고 SPA(CSR) 전용으로 만듭니다.
+        '/post' : { ssr: true },
+        '/member/': { ssr: true }
+    }
 })
