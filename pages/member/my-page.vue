@@ -21,17 +21,17 @@
           <div v-if="postsViewMode === 'notTmp'" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
               <div class="col" v-for="post in notTmpPosts">
                   <div class="card shadow-sm">
-                      <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: صورة مصغرة" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">صورة مصغرة</text></svg>
+                      <svg @click="router.push({ path: `/post/detail/${post.postId}` })" class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: صورة مصغرة" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">صورة مصغرة</text></svg>
                       <div class="card-body">
-                          <p class="card-text">{{ post.title }}</p>
+                          <NuxtLink :to="`/post/detail/${post.postId}`"><p class="card-text">{{ post.title }}</p></NuxtLink>
                           <div class="d-flex justify-content-between align-items-center">
                               <div class="btn-group">
                                   <button type="button" class="btn btn-sm btn-outline-secondary">수정</button>
                                   <button @click="removePost(post.postId)" type="button" class="btn btn-sm btn-outline-secondary">삭제</button>
                               </div>
                               <div>
-                                  <div class="text-body-secondary">{{ post.createDateTime }}</div>
-                                  <div class="text-body-secondary">{{ post.updateDateTime }}</div>
+                                  <div><span class="badge rounded-pill text-bg-light">{{ post.createDateTime }}</span></div>
+                                  <div><span class="badge rounded-pill text-bg-light">{{ post.updateDateTime }}</span></div>
                               </div>
                           </div>
                       </div>
@@ -41,9 +41,9 @@
           <div v-if="postsViewMode === 'tmp'" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
               <div class="col" v-for="post in tmpPosts">
                   <div class="card shadow-sm">
-                      <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: صورة مصغرة" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">صورة مصغرة</text></svg>
+                      <svg @click="router.push({ path: `/post/detail/${post.postId}` })" class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: صورة مصغرة" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">صورة مصغرة</text></svg>
                       <div class="card-body">
-                          <p class="card-text">{{ post.title }}</p>
+                          <NuxtLink :to="`/post/detail/${post.postId}`"><p class="card-text">{{ post.title }}</p></NuxtLink>
                           <div class="d-flex justify-content-between align-items-center">
                               <div class="btn-group">
                                   <button type="button" class="btn btn-sm btn-outline-secondary">수정</button>
@@ -75,7 +75,7 @@ onMounted(async () => {
     loadPageInfo()
 })
 async function loadPageInfo() {
-    loginedMember.value = useMainStore().getMember()
+    loginedMember.value = (await member.getMe()).member
     const postsData = await post.getByMember(loginedMember.value.nickname)
     notTmpPosts.value = postsData.notTmp
     tmpPosts.value = postsData.tmp

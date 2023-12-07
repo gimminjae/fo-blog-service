@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@pinia/nuxt": "^0.5.1",
+    "@toast-ui/editor": "^3.2.2",
     "@toast-ui/vue-editor": "^3.2.3",
     "axios": "^1.6.1",
     "pinia": "^2.1.7",

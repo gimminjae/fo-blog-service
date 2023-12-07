@@ -6,6 +6,7 @@
 </template>
 <script setup>
 import 'vue3-toastify/dist/index.css'
+import '@toast-ui/editor/dist/toastui-editor.css';
 import routes from '~/composables/route'
 
 onMounted(async () => {

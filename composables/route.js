@@ -16,6 +16,9 @@ const routes = {
     },
     getQuery: () => {
         return useRoute().query
+    },
+    getParam: () => {
+        return useRoute().params
     }
 }
 
