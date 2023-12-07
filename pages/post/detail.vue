@@ -6,7 +6,7 @@
                     <h1>{{ postObject.title }}</h1>
                 </div>
                 <div v-if="postObject.memId === useMainStore().member.memId" class="d-flex gap-3">
-                    <NuxtLink :to="`/post/modify/${postObject.postId}`" class="btn btn-secondary btn-lg">수정</NuxtLink>
+                    <button @click="router.push({ path: '/post/modify', query: { postId: postObject.postId }})" class="btn btn-secondary btn-lg">수정</button>
                     <button @click="removePost(postObject.postId)" class="btn btn-outline-danger btn-lg">삭제</button>
                 </div>
             </div>
