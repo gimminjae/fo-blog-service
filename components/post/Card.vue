@@ -1,7 +1,7 @@
 <template>
   <div>
       <div class="card shadow-sm">
-          <svg @click="router.push({ path: `/post/detail`, query: { postId: post.postId } })" class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: صورة مصغرة" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">صورة مصغرة</text></svg>
+          <img @click="router.push({ path: `/post/detail`, query: { postId: post.postId } })" src="/default-book.png" alt="">
           <div class="card-body">
               <NuxtLink :to="{ path: `/post/detail`, query: { postId: post.postId } }"><p class="card-text">{{ post.title }}</p></NuxtLink>
               <div class="d-flex justify-content-between align-items-center">
