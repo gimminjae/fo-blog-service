@@ -1,7 +1,7 @@
 <template>
   <div>
       <div class="text-center">
-          <img class="rounded-circle" alt="avatar1" src="https://mdbcdn.b-cdn.net/img/new/avatars/9.webp" />
+          <img @click="changeImageUploadYn" class="rounded-circle" alt="avatar1" src="https://mdbcdn.b-cdn.net/img/new/avatars/9.webp" />
           <div>
               <h1>{{ loginedMember.nickname }}</h1>
               <h4>Since {{ loginedMember.createDateTime }}</h4>
@@ -29,11 +29,47 @@
               </div>
           </div>
       </div>
+<!--      <div v-if="imageUploadYn" class="position-absolute top-50 start-50 translate-middle z-100 bg-white px-10">-->
+<!--          <div class="modal-dialog">-->
+<!--              <div class="modal-content">-->
+<!--                  <div class="modal-header">-->
+<!--                      <h5 class="modal-title">이미지 변경</h5>-->
+<!--                      <button @click="changeImageUploadYn" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
+<!--                  </div>-->
+<!--                  <div class="modal-body">-->
+<!--                      <div class="mb-3">-->
+<!--                          <input class="form-control" type="file" id="formFile">-->
+<!--                      </div>-->
+<!--                  </div>-->
+<!--                  <div class="modal-footer">-->
+<!--                      <button type="button" class="btn btn-primary">Save changes</button>-->
+<!--                  </div>-->
+<!--              </div>-->
+<!--          </div>-->
+<!--      </div>-->
+      <div v-if="imageUploadYn" class="modal modal-sheet position-absolute top-50 start-50 translate-middle d-block p-4 py-md-5" tabindex="-1" role="dialog" id="modalSheet"> <!-- bg-body-secondary -->
+          <div class="modal-dialog" role="document">
+              <div class="modal-content rounded-4 shadow">
+                  <div class="modal-header border-bottom-0">
+                      <h1 class="modal-title fs-5">이미지 변경</h1>
+                      <button @click="changeImageUploadYn" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="mb-3 mx-3">
+                      <input class="form-control" type="file" id="formFile">
+                  </div>
+                  <div class="modal-footer flex-column align-items-stretch w-100 gap-2 pb-3 border-top-0">
+                      <button type="button" class="btn btn-lg btn-primary">Save changes</button>
+                  </div>
+              </div>
+          </div>
+      </div>
   </div>
 </template>
 <script setup>
 import { ref } from "vue";
 import post from "~/composables/post"
+
+const imageUploadYn = ref(false)
 
 const postsViewMode = ref("notTmp")
 
@@ -54,6 +90,9 @@ function changePostView(mode) {
 }
 function loadPageInfoByPostCard(event) {
     loadPageInfo()
+}
+function changeImageUploadYn() {
+    imageUploadYn.value = !imageUploadYn.value
 }
 </script>
 <style scoped>
