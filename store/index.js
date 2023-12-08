@@ -5,7 +5,8 @@ export const useMainStore = defineStore('member', {
             memId: '',
             nickname: '',
             createDateTime: '',
-            role: ''
+            role: '',
+            memType: ''
         }
     }),
     actions: {
@@ -15,6 +16,7 @@ export const useMainStore = defineStore('member', {
                 nickname: '',
                 createDateTime: '',
                 role: '',
+                memType: ''
             }
         },
         setMember(member) {
@@ -22,6 +24,7 @@ export const useMainStore = defineStore('member', {
             this.member.nickname = member.nickname
             this.member.createDateTime = member.createDateTime
             this.member.role = member.role
+            this.member.memType = member.memType
         },
         getMember() {
             return this.member
