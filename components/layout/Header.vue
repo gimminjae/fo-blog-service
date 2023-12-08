@@ -11,7 +11,7 @@
 <!--              <li><NuxtLink to="/" class="nav-link px-2 link-secondary">Home</NuxtLink></li>-->
               <li><NuxtLink v-if="store.member.memId" to="/post/write" class="nav-link px-2">Write</NuxtLink></li>
               <li><NuxtLink v-if="store.member.memId" to="/member/my-page" class="nav-link px-2">My Page</NuxtLink></li>
-              <li><a href="#" class="nav-link px-2">About</a></li>
+              <li><NuxtLink v-if="store.member.memId" to="/member/setting" class="nav-link px-2">Setting</NuxtLink></li>
           </ul>
 
           <div class="col-md-3 text-end d-flex gap-2">
