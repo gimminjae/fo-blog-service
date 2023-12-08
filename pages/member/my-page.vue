@@ -1,7 +1,8 @@
 <template>
   <div>
       <div class="text-center">
-          <img @click="changeImageUploadYn" class="rounded-circle" alt="avatar1" src="https://mdbcdn.b-cdn.net/img/new/avatars/9.webp" />
+          <img @click="changeImageUploadYn" class="rounded-circle img-thumbnail" alt="avatar1" src="https://mdbcdn.b-cdn.net/img/new/avatars/9.webp" />
+          <img @click="changeImageUploadYn" class="rounded-circle img-thumbnail object-cover" style="width: 250px; height: 250px" alt="avatar1" :src="inputImage" />
           <div>
               <h1>{{ loginedMember.nickname }}</h1>
               <h4>Since {{ loginedMember.createDateTime }}</h4>
@@ -55,7 +56,7 @@
                       <button @click="changeImageUploadYn" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="mb-3 mx-3">
-                      <input class="form-control" type="file" id="formFile">
+                      <input @change="inputFile($event.target.files)" class="form-control" type="file" id="formFile">
                   </div>
                   <div class="modal-footer flex-column align-items-stretch w-100 gap-2 pb-3 border-top-0">
                       <button type="button" class="btn btn-lg btn-primary">Save changes</button>
@@ -71,8 +72,8 @@ import post from "~/composables/post"
 
 const imageUploadYn = ref(false)
 
+const inputImage = ref('')
 const postsViewMode = ref("notTmp")
-
 const notTmpPosts = ref([])
 const tmpPosts = ref([])
 const loginedMember = ref({})
@@ -93,6 +94,26 @@ function loadPageInfoByPostCard(event) {
 }
 function changeImageUploadYn() {
     imageUploadYn.value = !imageUploadYn.value
+}
+async function inputFile(files) {
+    console.log(files)
+    inputImage.value = await base64(files[0])
+}
+function base64(file) {
+    // 비동기적으로 동작하기 위하여 promise를 return 해준다.
+    return new Promise(resolve => {
+        // 업로드된 파일을 읽기 위한 FileReader() 객체 생성
+        let a = new FileReader()
+        // 읽기 동작이 성공적으로 완료됐을 때 발생
+        a.onload = e => {
+            resolve(e.target.result)
+            // 썸네일을 보여주고자 하는 <img>에 id값을 가져와 src에 결과값을 넣어준다.
+            const previewImage = document.getElementById('preview')
+            previewImage.src = e.target.result
+        }
+        // file 데이터를 base64로 인코딩한 문자열. 이 문자열을 브라우저가 인식하여 원래 데이터로 만들어준다.
+        a.readAsDataURL(file)
+    })
 }
 </script>
 <style scoped>

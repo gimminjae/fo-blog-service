@@ -7,7 +7,7 @@
           </div>
           <div class="mb-3">
               <label for="formFile" class="form-label">Default file input example</label>
-              <input class="form-control" type="file" id="formFile">
+              <input @change="inputFile" class="form-control" type="file" id="formFile">
           </div>
           <div>
               {{ loginedMember }}
@@ -38,12 +38,14 @@
 import {ref} from "vue";
 
 const imageUploadYn = ref(false)
-
 const loginedMember = ref({})
 onMounted(async () => {
     loadPageInfo()
 })
 async function loadPageInfo() {
     loginedMember.value = (await member.getMe()).member
+}
+function inputFile() {
+
 }
 </script>
