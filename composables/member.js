@@ -28,6 +28,9 @@ const member = {
     },
     regenerateAccessToken() {
         return api.get('/api/member/access-token', cookieUtil.getRefreshToken())
+    },
+    uploadProfileImage(data) {
+        return api.post('/api/member/profile-image', data)
     }
 }
 export default member

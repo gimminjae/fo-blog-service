@@ -2,7 +2,7 @@
   <div>
       <div class="text-center">
           <img @click="changeImageUploadYn" class="rounded-circle img-thumbnail" alt="avatar1" src="https://mdbcdn.b-cdn.net/img/new/avatars/9.webp" />
-          <img @click="changeImageUploadYn" class="rounded-circle img-thumbnail object-cover" style="width: 250px; height: 250px" alt="avatar1" :src="inputImage" />
+          <img @click="changeImageUploadYn" class="rounded-circle img-thumbnail object-cover" style="width: 250px; height: 250px" alt="avatar1" :src="testImage" />
           <div>
               <h1>{{ loginedMember.nickname }}</h1>
               <h4>Since {{ loginedMember.createDateTime }}</h4>
@@ -59,7 +59,7 @@
                       <input @change="inputFile($event.target.files)" class="form-control" type="file" id="formFile">
                   </div>
                   <div class="modal-footer flex-column align-items-stretch w-100 gap-2 pb-3 border-top-0">
-                      <button type="button" class="btn btn-lg btn-primary">Save changes</button>
+                      <button @click="uploadImage" type="button" class="btn btn-lg btn-primary">Save changes</button>
                   </div>
               </div>
           </div>
@@ -69,9 +69,10 @@
 <script setup>
 import { ref } from "vue";
 import post from "~/composables/post"
+import handleError from "~/composables/error";
 
 const imageUploadYn = ref(false)
-
+const testImage = ref('')
 const inputImage = ref('')
 const postsViewMode = ref("notTmp")
 const notTmpPosts = ref([])
@@ -97,7 +98,19 @@ function changeImageUploadYn() {
 }
 async function inputFile(files) {
     console.log(files)
-    inputImage.value = await base64(files[0])
+    inputImage.value = files[0]
+    testImage.value = await base64(files[0])
+}
+async function uploadImage() {
+    const data = new FormData();
+    data.append("imageFile", inputImage.value)
+    data.append("memId", loginedMember.value.memId)
+    data.append("postId", '')
+    try {
+        await member.uploadProfileImage()
+    } catch(error) {
+        handleError.apiError(error)
+    }
 }
 function base64(file) {
     // 비동기적으로 동작하기 위하여 promise를 return 해준다.
